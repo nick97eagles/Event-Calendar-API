@@ -1,0 +1,27 @@
+body {
+    text-align: center; 
+    position: relative;
+    margin: 0;
+}
+
+header {
+    font-size: 30px;
+    border: 1px solid black;
+    margin-bottom: 5%;
+}
+
+.instructions {
+    font-size: 20px; 
+}
+
+.buttons {
+    height: 50px; 
+    width: 80px;
+    border-radius: 70%;
+}
+
+#container {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}

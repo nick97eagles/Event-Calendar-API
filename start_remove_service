@@ -1,0 +1,5 @@
+#!/bin/bash
+
+vm="carmpr@cptr320.cs.wallawalla.edu"
+ssh ${vm} 'cd project320; git pull'
+ssh ${vm} './project320/start_school_api'

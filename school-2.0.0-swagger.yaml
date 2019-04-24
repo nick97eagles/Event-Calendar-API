@@ -1,0 +1,227 @@
+openapi: 3.0.0
+# Added by API Auto Mocking Plugin
+servers:
+  - url: http://18.208.163.54:8888/api/v2/calendar
+    description: AWS cloud instance
+info:
+  description: |
+    Review the details of the assignment in your lab project README.md file.
+  version: "2.0.0"
+  title: Lab Project - Event Calendar
+tags:
+  - name: calendar
+  - name: guest_list
+paths:
+  /calendar:
+    get:
+      tags:
+        - calendar
+      summary: Finds event
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Calendar'
+    post:
+      tags:
+        - calendar
+      summary: Add a new event 
+      responses:
+        '405':
+          description: Invalid input
+      requestBody:
+        $ref: '#/components/requestBodies/Calendar'
+  /calendar/{id}:
+    get:
+      tags:
+        - calendar
+      summary: Finds event by id
+      parameters:
+        - name: id
+          in: path
+          description: ID of event to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Calendar'
+        '400':
+          description: Invalid ID value
+        '404':
+          description: Event not found
+    put:
+      tags:
+        - calendar
+      summary: Updates an Event
+      parameters:
+        - name: id
+          in: path
+          description: ID of event that needs to be updated
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '405':
+          description: Invalid input
+      requestBody:
+        $ref: '#/components/requestBodies/Calendar'
+    delete:
+      tags:
+        - calendar
+      summary: Deletes an event
+      parameters:
+        - name: id
+          in: path
+          description: Event id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Event not found
+  /guest_list:
+    post:
+      tags:
+        - guest_list
+      summary: Add a new student to the guest list 
+      responses:
+        '405':
+          description: Invalid input
+      requestBody:
+        $ref: '#/components/requestBodies/Calendar'
+  /guest_list/{id}:
+    get:
+      tags:
+        - guest_list
+      summary: Finds guest list linked by foreign key
+      parameters:
+        - name: id
+          in: path
+          description: ID of list to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Guest_List'
+        '400':
+          description: Invalid ID value
+        '404':
+          description: Event not found
+    put:
+      tags:
+        - guest_list
+      summary: Updates a guest list
+      parameters:
+        - name: id
+          in: path
+          description: ID of list that needs to be updated
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '405':
+          description: Invalid input
+      requestBody:
+        $ref: '#/components/requestBodies/Guest_List'
+    delete:
+      tags:
+        - guest_list
+      summary: Deletes a guest list
+      parameters:
+        - name: id
+          in: path
+          description: Event id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Event not found
+components:
+  schemas:
+    Calendar:
+      type: object
+      properties:
+        event_id:
+          type: integer
+          format: int64
+          example: 132
+        event_name:
+          type: string
+          example: Cptr320 project
+        event_desc:
+          type: string
+          example: Meet in CS Lab
+        hosted_by:
+          type: string
+          example: Cptr320
+        location: 
+          type: string
+          example: Dell Taco
+        created_at:
+          type: integer
+          example: 1/2/19
+        event_date:
+          type: number
+          example: 2/24/19
+       
+    Guest_List:
+      type: object
+      properties:
+        student_id:
+          type: integer
+          format: int64
+          example: 321
+        event_id: 
+          type: integer
+          format: int64
+          example: 3
+        student_name:
+          type: string
+          example: Nicholas Morin
+        phone_number: 
+          type: string
+          example: 1-274-229-1308
+  requestBodies:
+    Calendar:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Calendar'
+      description: Events based on a calendar system
+      required: true
+    Guest_List:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Guest_List'
+      description: Guest List for events 
+      required: true
